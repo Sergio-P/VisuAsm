@@ -1,0 +1,9 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+#blockly-container{
+    height: 100vh;
+    width: 49vw;
+}
