@@ -1,0 +1,19 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+#blockly-container{
+    height: 100vh;
+    width: 49vw;
+}
+
+#visualizer{
+    width: 49vw;
+    height: 85vh;
+}
+
+#control-bar{
+    height: 15vh;
+    text-align: center;
+}
