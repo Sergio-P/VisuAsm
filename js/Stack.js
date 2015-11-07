@@ -1,7 +1,7 @@
 var Stack = function(){
 	this.array = [];
 	this.currentIndex = -1;
-}
+};
 
 Stack.prototype = {
 	peek: function(){
@@ -21,5 +21,5 @@ Stack.prototype = {
 	is_empty: function(){
 		return this.currentIndex < 0;
 	}
-}
+};
 

@@ -2,13 +2,19 @@ Blockly.Blocks['label'] = {
 	init: function() {
 		this.appendDummyInput()
 			.appendField("Label:")
-			.appendField(new Blockly.FieldTextInput("label1"), "NAME");
+			.appendField(new Blockly.FieldTextInput("label1"), "label");
 		this.setInputsInline(false);
 		this.setPreviousStatement(true);
 		this.setNextStatement(true);
 		this.setColour(20);
 		this.setTooltip('');
 	}
+};
+
+Blockly.JavaScript['label'] = function(block) {
+	var value_c2 = block.getFieldValue('label');
+	var code = "label('"+value_c2+"');#";
+	return [code,Blockly.JavaScript.ORDER_ADDITION];
 };
 
 Blockly.Blocks['mov'] = {
@@ -25,23 +31,18 @@ Blockly.Blocks['mov'] = {
 	}
 };
 
+Blockly.JavaScript['mov'] = function(block) {
+	var value_c1 = Blockly.JavaScript.valueToCode(block, 'src', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_c2 = Blockly.JavaScript.valueToCode(block, 'dest', Blockly.JavaScript.ORDER_ATOMIC);
+	var code = "mov('"+value_c1+"','"+value_c2+"');#";
+	return [code,Blockly.JavaScript.ORDER_ADDITION];
+};
+
 Blockly.Blocks['const'] = {
 	init: function() {
 		this.appendDummyInput()
 			.appendField("$")
 			.appendField(new Blockly.FieldTextInput("0"), "val");
-		this.setInputsInline(true);
-		this.setOutput(true, "Number");
-		this.setColour(60);
-		this.setTooltip('');
-	}
-};
-
-Blockly.Blocks['ref'] = {
-	init: function() {
-		this.appendDummyInput()
-			.appendField("%")
-			.appendField(new Blockly.FieldDropdown([["eax", "eax"], ["ebx", "ebx"], ["ecx", "ecx"], ["edx", "edx"]]), "reg");
 		this.setInputsInline(true);
 		this.setOutput(true, "String");
 		this.setColour(60);
@@ -49,10 +50,34 @@ Blockly.Blocks['ref'] = {
 	}
 };
 
+Blockly.JavaScript['const'] = function(block) {
+	var dropdown_type = block.getFieldValue('val');
+	var code = dropdown_type;
+	return [code,Blockly.JavaScript.ORDER_ADDITION];
+};
+
+Blockly.Blocks['ref'] = {
+	init: function() {
+		this.appendDummyInput()
+			.appendField("%")
+			.appendField(new Blockly.FieldDropdown([["eax", "eax"], ["ebx", "ebx"], ["ecx", "ecx"], ["edx", "edx"], ["esp", "esp"], ["ebp", "ebp"]]), "reg");
+		this.setInputsInline(true);
+		this.setOutput(true, "String");
+		this.setColour(60);
+		this.setTooltip('');
+	}
+};
+
+Blockly.JavaScript['ref'] = function(block) {
+	var dropdown_type = block.getFieldValue('reg');
+	var code = dropdown_type;
+	return [code,Blockly.JavaScript.ORDER_ADDITION];
+};
+
 Blockly.Blocks['arithmetic'] = {
 	init: function() {
 		this.appendValueInput("src")
-			.appendField(new Blockly.FieldDropdown([["add", "add"], ["sub", "sub"], ["mul", "mul"], ["div", "div"], ["shr", "shr"], ["shl", "shl"], ["ror", "ror"], ["rol", "rol"]]), "operator");
+			.appendField(new Blockly.FieldDropdown([["add", "add"], ["sub", "sub"], ["mul", "mul"], ["div", "div"], ["shr", "shr"], ["shl", "shl"]]), "operator");
 		this.appendValueInput("dest")
 			.appendField(",");
 		this.setInputsInline(true);
@@ -61,6 +86,14 @@ Blockly.Blocks['arithmetic'] = {
 		this.setColour(0);
 		this.setTooltip('');
 	}
+};
+
+Blockly.JavaScript['arithmetic'] = function(block) {
+	var dropdown_type = block.getFieldValue('operator');
+	var value_c1 = Blockly.JavaScript.valueToCode(block, 'src', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_c2 = Blockly.JavaScript.valueToCode(block, 'dest', Blockly.JavaScript.ORDER_ATOMIC);
+	var code = dropdown_type+"('"+value_c1+"','"+value_c2+"');#";
+	return [code,Blockly.JavaScript.ORDER_ADDITION];
 };
 
 Blockly.Blocks['incr'] = {
@@ -73,4 +106,52 @@ Blockly.Blocks['incr'] = {
 		this.setColour(0);
 		this.setTooltip('');
 	}
+};
+
+Blockly.JavaScript['incr'] = function(block) {
+	var dropdown_type = block.getFieldValue('operator');
+	var value_label = Blockly.JavaScript.valueToCode(block, 'label', Blockly.JavaScript.ORDER_ATOMIC);
+	var code = dropdown_type+"('"+value_label+"');#";
+	return [code,Blockly.JavaScript.ORDER_ADDITION];
+};
+
+Blockly.Blocks['cmp'] = {
+	init: function() {
+		this.appendValueInput("c1")
+				.appendField(new Blockly.FieldDropdown([["cmp", "cmp"], ["test", "test"]]), "type");
+		this.appendValueInput("c2")
+				.appendField(",");
+		this.setInputsInline(true);
+		this.setPreviousStatement(true);
+		this.setNextStatement(true);
+		this.setColour(210);
+		this.setTooltip('');
+	}
+};
+
+Blockly.JavaScript['cmp'] = function(block) {
+	var dropdown_type = block.getFieldValue('type');
+	var value_c1 = Blockly.JavaScript.valueToCode(block, 'c1', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_c2 = Blockly.JavaScript.valueToCode(block, 'c2', Blockly.JavaScript.ORDER_ATOMIC);
+	var code = dropdown_type+"('"+value_c1+"','"+value_c2+"');#";
+	return [code,Blockly.JavaScript.ORDER_ADDITION];
+};
+
+Blockly.Blocks['jump'] = {
+	init: function() {
+		this.appendValueInput("label")
+				.appendField(new Blockly.FieldDropdown([["jmp", "jmp"], ["je", "je"], ["jge", "jge"], ["jle", "jle"], ["jz", "jz"], ["jnz", "jnz"]]), "type");
+		this.setInputsInline(true);
+		this.setPreviousStatement(true);
+		this.setNextStatement(true);
+		this.setColour(230);
+		this.setTooltip('');
+	}
+};
+
+Blockly.JavaScript['jump'] = function(block) {
+	var dropdown_type = block.getFieldValue('type');
+	var value_label = Blockly.JavaScript.valueToCode(block, 'label', Blockly.JavaScript.ORDER_ATOMIC);
+	var code = dropdown_type+"('"+value_label+"');#";
+	return [code,Blockly.JavaScript.ORDER_ADDITION];
 };
