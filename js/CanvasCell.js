@@ -48,9 +48,11 @@ CanvasCell.prototype = {
 		this.text = text;
 		this.button.children[0].text = text;
 		this.button.children[0].opacity = 0;
-		//this.button.animate({fill: "#fff"},{duration:"normal"});
-		//this.button.animate({x: 20},{duration:"normal"});
 		this.button.children[0].fadeIn("normal");
+	},
+
+	remove: function(){
+		this.button.remove();
 	}
 
 };
