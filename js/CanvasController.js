@@ -34,6 +34,10 @@ CanvasController.prototype = {
 		r.remove();
 	},
 
+	updateReg: function(reg,text){
+		self.cpuRegs[reg].updateText(text);
+	},
+
 	drawText: function(text,x,y){
 		var LText = this.cv.display.text({
 			x: x,
