@@ -9,8 +9,9 @@
 }
 
 #visualizer{
-    width: 49vw;
-    height: 85vh;
+    height: 500px;
+    width: 500px;
+    margin: 0 auto;
 }
 
 #control-bar{
