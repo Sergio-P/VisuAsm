@@ -77,7 +77,7 @@ Blockly.JavaScript['ref'] = function(block) {
 Blockly.Blocks['arithmetic'] = {
 	init: function() {
 		this.appendValueInput("src")
-			.appendField(new Blockly.FieldDropdown([["add", "add"], ["sub", "sub"], ["mul", "mul"], ["div", "div"], ["shr", "shr"], ["shl", "shl"]]), "operator");
+			.appendField(new Blockly.FieldDropdown([["add", "add"], ["sub", "sub"], ["shr", "shr"], ["shl", "shl"]]), "operator");
 		this.appendValueInput("dest")
 			.appendField(",");
 		this.setInputsInline(true);
@@ -99,7 +99,7 @@ Blockly.JavaScript['arithmetic'] = function(block) {
 Blockly.Blocks['incr'] = {
 	init: function() {
 		this.appendValueInput("src")
-			.appendField(new Blockly.FieldDropdown([["inc", "inc"], ["dec", "dec"]]), "operator");
+			.appendField(new Blockly.FieldDropdown([["mul", "mul"], ["div", "div"], ["inc", "inc"], ["dec", "dec"]]), "operator");
 		this.setInputsInline(true);
 		this.setPreviousStatement(true);
 		this.setNextStatement(true);
@@ -139,8 +139,9 @@ Blockly.JavaScript['cmp'] = function(block) {
 
 Blockly.Blocks['jump'] = {
 	init: function() {
-		this.appendValueInput("label")
-				.appendField(new Blockly.FieldDropdown([["jmp", "jmp"], ["je", "je"], ["jge", "jge"], ["jle", "jle"], ["jz", "jz"], ["jnz", "jnz"]]), "type");
+		this.appendDummyInput()
+				.appendField(new Blockly.FieldDropdown([["jmp", "jmp"], ["je", "je"], ["jge", "jge"], ["jle", "jle"], ["jz", "jz"], ["jnz", "jnz"]]), "type")
+				.appendField(new Blockly.FieldTextInput("label1"), "label");
 		this.setInputsInline(true);
 		this.setPreviousStatement(true);
 		this.setNextStatement(true);
@@ -151,7 +152,7 @@ Blockly.Blocks['jump'] = {
 
 Blockly.JavaScript['jump'] = function(block) {
 	var dropdown_type = block.getFieldValue('type');
-	var value_label = Blockly.JavaScript.valueToCode(block, 'label', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_label = block.getFieldValue('label');
 	var code = dropdown_type+"('"+value_label+"');#";
 	return [code,Blockly.JavaScript.ORDER_ADDITION];
 };
