@@ -4,19 +4,19 @@ var CanvasController = function(cv){
 		fps: 30
 	});
 	this.cv.width = 550;
-	this.cv.height = 600;
+	this.cv.height = 550;
 	this.initDraw();
 };
 
 CanvasController.prototype = {
 	initDraw: function(){
 		this.cpuRegs = {
-			"eax": new CanvasCell(this.cv, 50, 100, "eax", "0x00", "#06C"),
-			"ebx": new CanvasCell(this.cv, 50+70, 100, "ebx", "0x00", "#06C"),
-			"ecx": new CanvasCell(this.cv, 50+140, 100, "ecx", "0x00", "#06C"),
-			"edx": new CanvasCell(this.cv, 50+210, 100, "edx", "0x00", "#06C"),
-			"esp": new CanvasCell(this.cv, 50, 100+50, "esp", "0x00", "#093"),
-			"ebp": new CanvasCell(this.cv, 50+70, 100+50, "ebp", "0x00", "#093")
+			"eax": new CanvasCell(this.cv, 50, 100, "eax", "0", "#06C"),
+			"ebx": new CanvasCell(this.cv, 50+70, 100, "ebx", "0", "#06C"),
+			"ecx": new CanvasCell(this.cv, 50+140, 100, "ecx", "0", "#06C"),
+			"edx": new CanvasCell(this.cv, 50+210, 100, "edx", "0", "#06C"),
+			"esp": new CanvasCell(this.cv, 50, 100+50, "esp", "0", "#093"),
+			"ebp": new CanvasCell(this.cv, 50+70, 100+50, "ebp", "0", "#093")
 		};
 		this.stack = [];
 		this.drawText("R-Bank:",50,30);
@@ -35,7 +35,13 @@ CanvasController.prototype = {
 	},
 
 	updateReg: function(reg,text){
-		self.cpuRegs[reg].updateText(text);
+		this.cpuRegs[reg].updateText(text);
+	},
+
+	updateAllRegs: function(){
+		for(var reg in this.cpuRegs){
+			this.cpuRegs[reg].updateText("0");
+		}
 	},
 
 	drawText: function(text,x,y){
