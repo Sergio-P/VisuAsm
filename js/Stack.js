@@ -6,14 +6,14 @@ var Stack = function(){
 Stack.prototype = {
 	peek: function(){
 		if(this.currentIndex < 0)return null;
-		return array[currentIndex];
+		return this.array[this.currentIndex];
 	},
 	pop: function(){
 		if(this.currentIndex < 0)return null;
-		return array[this.currentIndex--];
+		return this.array[this.currentIndex--];
 	},
 	push: function(item){
-		this.array[this.currentIndex++] = item;
+		this.array[++this.currentIndex] = item;
 	},
 	size: function(){
 		return this.currentIndex + 1;
