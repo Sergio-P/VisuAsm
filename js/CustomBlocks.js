@@ -140,7 +140,7 @@ Blockly.JavaScript['cmp'] = function(block) {
 Blockly.Blocks['jump'] = {
 	init: function() {
 		this.appendDummyInput()
-				.appendField(new Blockly.FieldDropdown([["jmp", "jmp"], ["je", "je"], ["jge", "jge"], ["jle", "jle"], ["jz", "jz"], ["jnz", "jnz"]]), "type")
+				.appendField(new Blockly.FieldDropdown([["jmp", "jmp"], ["je", "je"], ["jne","jne"], ["jg","jg"], ["jge", "jge"], ["jl","jl"], ["jle", "jle"]]), "type")
 				.appendField(new Blockly.FieldTextInput("label1"), "label");
 		this.setInputsInline(true);
 		this.setPreviousStatement(true);

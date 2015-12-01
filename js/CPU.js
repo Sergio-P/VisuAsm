@@ -40,12 +40,19 @@ CPU.prototype = {
 	push: function(reg){
 		if(this.registers.get(reg) instanceof Register){
 			this.stack.push(this.registers.get(reg).value);
+			canvasController.stackPush(this.registers.get(reg).value);
 		}else{
 			this.stack.push(parseInt(reg));
+			canvasController.stackPush(reg);
 		}
+		this.registers.get("esp").value++;
+		canvasController.updateReg("esp",this.registers.get("esp").value);
 	},
 	pop: function(reg1){
 		this.registers.get(reg1).value = this.stack.pop();
+		this.registers.get("esp").value--;
+		canvasController.updateReg("esp",this.registers.get("esp").value);
+		canvasController.stackPop();
 	},
 	mov: function(reg1, reg2){
 		if(this.registers.get(reg2) instanceof Register){
@@ -87,6 +94,18 @@ CPU.prototype = {
 		var result = arg * this.registers.get("eax").value;
 		this.registers.get("eax").value = result & 0xffffffff;
 		this.registers.get("edx").value = Math.floor(result/Math.pow(2,32));
+		canvasController.updateReg("eax",this.registers.get("eax").value);
+		canvasController.updateReg("edx",this.registers.get("edx").value);
+	},
+	div: function(reg1){
+		var arg;
+		if(this.registers.get(reg1) instanceof Register){
+			arg = this.registers.get(reg1).value;
+		}else{
+			arg = parseInt(reg1);
+		}
+		this.registers.get("edx").value = this.registers.get("eax").value%arg;
+		this.registers.get("eax").value = Math.floor(this.registers.get("eax").value/arg);
 		canvasController.updateReg("eax",this.registers.get("eax").value);
 		canvasController.updateReg("edx",this.registers.get("edx").value);
 	},
@@ -175,5 +194,10 @@ CPU.prototype = {
 		if(this.cmp_flag < 0){
 			this.jmp(label);
 		}
+	},
+	jle: function(label){
+	if(this.cmp_flag <= 0){
+		this.jmp(label);
 	}
+}
 };

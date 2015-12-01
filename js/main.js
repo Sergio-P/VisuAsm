@@ -22,6 +22,7 @@ function main(){
 
 	$("#play-btn").click(function(){
 		cpu.setInstructions(blocklyController.getCode());
+		cpuTimer.isTiming = true;
 		cpuTimer.nextInstruction();
 	});
 

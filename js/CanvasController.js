@@ -44,6 +44,9 @@ CanvasController.prototype = {
 		for(var reg in this.cpuRegs){
 			this.cpuRegs[reg].updateText("0");
 		}
+		while(this.stack.length>0){
+			this.stackPop();
+		}
 	},
 
 	drawText: function(text,x,y){
@@ -60,9 +63,15 @@ CanvasController.prototype = {
 	},
 
 	updateInstText: function(text){
+		console.log(text);
+		text = text.replace(/'/g, " ");
+		text = text.replace(/\(/g, " ");
+		text = text.replace(/\)/g, " ");
+		text = text.replace(/;/g, " ");
+		console.log(text);
 		if(this.instText==null){
 			this.instText = this.cv.display.text({
-				x: 200,
+				x: 300,
 				y: 520,
 				origin: { x: "center", y: "center" },
 				align: "center",
@@ -74,6 +83,7 @@ CanvasController.prototype = {
 		}
 		else{
 			this.instText.text = text;
+			this.instText.redraw();
 		}
 	}
 
