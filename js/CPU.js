@@ -90,15 +90,15 @@ CPU.prototype = {
 		canvasController.updateReg("eax",this.registers.get("eax").value);
 		canvasController.updateReg("edx",this.registers.get("edx").value);
 	},
-	shr: function(reg1){
-		if(reg1 instanceof Register && this.registers.get(reg1) != null){
-			this.registers.get(reg1).value = this.registers.get(reg1).value >> 1;
+	shr: function(val, reg1){
+		if(this.registers.get(reg1) instanceof Register){
+			this.registers.get(reg1).value = this.registers.get(reg1).value >> val;
 			canvasController.updateReg(reg1,this.registers.get(reg1).value);
 		}
 	},
-	shl: function(reg1){
-		if(reg1 instanceof Register && this.registers.get(reg1) != null){
-			this.registers.get(reg1).value = this.registers.get(reg1).value << 1;
+	shl: function(val, reg1){
+		if(this.registers.get(reg1) instanceof Register){
+			this.registers.get(reg1).value = this.registers.get(reg1).value << val;
 			canvasController.updateReg(reg1,this.registers.get(reg1).value);
 		}
 	},
