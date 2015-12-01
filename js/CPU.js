@@ -2,8 +2,16 @@ var CPU = function(){
 	this.RAM = new RAM(80);
 	this.registers = new RegistersBlock();
 	this.instructions = [];
+	this.labels = {};
 	this.pc = -1;
 };
+
+
+function get_argument(instruction){
+	var index_start = instruction.indexOf('\'', 0) + 1;
+	var index_end = instruction.indexOf('\'', index_start);
+	return instruction.substring(index_start, index_end);
+}
 
 CPU.prototype = {
 	mov: function(reg1, reg2){
@@ -80,8 +88,19 @@ CPU.prototype = {
 		}
 		canvasController.updateAllRegs();
 	},
+	label: function(label){
+		// do nothing
+	},
 	setInstructions: function (ins){
+		this.labels = {};
 		this.instructions = ins;
+		for(var i in ins){
+			var instruction = ins[i];
+			if(instruction.substring(0,5) == "label"){
+				var label_name = get_argument(instruction);
+				this.labels[label_name] = i;
+			}
+		}
 		this.restart();
 	},
 	performInstruction: function(){
@@ -94,6 +113,8 @@ CPU.prototype = {
 			console.log("this." + inst);
 			eval("this." + inst);
 		}
+	},
+	jmp: function(label){
+		this.pc = this.labels[label];
 	}
-
 };
