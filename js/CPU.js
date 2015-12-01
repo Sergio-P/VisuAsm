@@ -150,5 +150,30 @@ CPU.prototype = {
 	},
 	jmp: function(label){
 		this.pc = this.labels[label];
+	},
+	je: function(label){
+		if(this.cmp_flag == 0){
+			this.jmp(label);
+		}
+	},
+	jne: function(label){
+		if(this.cmp_flag != 0){
+			this.jmp(label);
+		}
+	},
+	jg: function(label){
+		if(this.cmp_flag > 0){
+			this.jmp(label);
+		}
+	},
+	jge: function(label){
+		if(this.cmp_flag >= 0){
+			this.jmp(label);
+		}
+	},
+	jl: function(label){
+		if(this.cmp_flag < 0){
+			this.jmp(label);
+		}
 	}
 };
