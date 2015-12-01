@@ -19,22 +19,23 @@ CPU.prototype = {
 	cmp: function(reg1, reg2){
 		var val1;
 		var val2;
+		if(this.registers.get(reg1) instanceof Register){
+			val1 = this.registers.get(reg1).value;
+		}else{
+			val1 = parseInt(reg1);
+		}
 		if(this.registers.get(reg2) instanceof Register){
-			if(this.registers.get(reg1) instanceof Register){
-				val1 = this.registers.get(reg1).value;
-				val2 = this.registers.get(reg2).value;
-			}else{
-				val1 = parseInt(reg1);
-				val2 = this.registers.get(reg2).value;
-			}
-			console.log("val1 = " + val1 + ", val2 = " + val2);
-			if(val1 > val2){
-				this.cmp_flag = 1;
-			}else if(val1 == val2){
-				this.cmp_flag = 0;
-			}else{
-				this.cmp_flag = -1;
-			}
+			val2 = this.registers.get(reg2).value;
+		}else{
+			val2 = parseInt(reg2);
+		}
+		console.log("val1 = " + val1 + ", val2 = " + val2);
+		if(val1 > val2){
+			this.cmp_flag = 1;
+		}else if(val1 == val2){
+			this.cmp_flag = 0;
+		}else{
+			this.cmp_flag = -1;
 		}
 	},
 	push: function(reg){
