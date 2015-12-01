@@ -110,7 +110,7 @@ Blockly.Blocks['incr'] = {
 
 Blockly.JavaScript['incr'] = function(block) {
 	var dropdown_type = block.getFieldValue('operator');
-	var value_label = Blockly.JavaScript.valueToCode(block, 'label', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_label = Blockly.JavaScript.valueToCode(block, 'src', Blockly.JavaScript.ORDER_ATOMIC);
 	var code = dropdown_type+"('"+value_label+"');#";
 	return [code,Blockly.JavaScript.ORDER_ADDITION];
 };
@@ -153,6 +153,26 @@ Blockly.Blocks['jump'] = {
 Blockly.JavaScript['jump'] = function(block) {
 	var dropdown_type = block.getFieldValue('type');
 	var value_label = block.getFieldValue('label');
+	var code = dropdown_type+"('"+value_label+"');#";
+	return [code,Blockly.JavaScript.ORDER_ADDITION];
+};
+
+
+Blockly.Blocks['stack'] = {
+	init: function() {
+		this.appendValueInput("src")
+			.appendField(new Blockly.FieldDropdown([["push", "push"], ["pop", "pop"]]), "type");
+		this.setInputsInline(true);
+		this.setPreviousStatement(true);
+		this.setNextStatement(true);
+		this.setColour(330);
+		this.setTooltip('');
+	}
+};
+
+Blockly.JavaScript['stack'] = function(block) {
+	var dropdown_type = block.getFieldValue('type');
+	var value_label = Blockly.JavaScript.valueToCode(block, 'src', Blockly.JavaScript.ORDER_ATOMIC);
 	var code = dropdown_type+"('"+value_label+"');#";
 	return [code,Blockly.JavaScript.ORDER_ADDITION];
 };

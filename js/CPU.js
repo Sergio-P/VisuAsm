@@ -53,7 +53,7 @@ CPU.prototype = {
 		}
 		var result = arg * this.registers.get("eax").value;
 		this.registers.get("eax").value = result & 0xffffffff;
-		this.registers.get("edx").value = result/Math.pow(2,32);
+		this.registers.get("edx").value = Math.floor(result/Math.pow(2,32));
 		canvasController.updateReg("eax",this.registers.get("eax").value);
 		canvasController.updateReg("edx",this.registers.get("edx").value);
 	},
@@ -70,14 +70,14 @@ CPU.prototype = {
 		}
 	},
 	inc: function(reg){
-		if(this.registers[reg] != null){
-			this.registers[reg].value++;
+		if(this.registers.get(reg) != null){
+			this.registers.get(reg).value++;
 			canvasController.updateReg(reg,this.registers.get(reg).value);
 		}
 	},
 	dec: function(reg){
-		if(this.registers[reg] != null){
-			this.registers[reg].value--;
+		if(this.registers.get(reg) != null){
+			this.registers.get(reg).value--;
 			canvasController.updateReg(reg,this.registers.get(reg).value);
 		}
 	},
