@@ -1,6 +1,7 @@
 var blocklyController;
 var canvasController;
 var cpu;
+var cpuTimer;
 
 function main(){
 	//Initialize
@@ -8,6 +9,7 @@ function main(){
 	blocklyController.initDiv("blockly-container");
 	canvasController = new CanvasController("#visualizer");
 	cpu = new CPU();
+	cpuTimer = new CPUTimer();
 
 	//Callbacks
 	$("#restart-btn").click(function(){
@@ -16,6 +18,15 @@ function main(){
 
 	$("#step-btn").click(function(){
 		cpu.performInstruction();
+	});
+
+	$("#play-btn").click(function(){
+		cpu.setInstructions(blocklyController.getCode());
+		cpuTimer.nextInstruction();
+	});
+
+	$("#stop-btn").click(function(){
+		cpuTimer.stop();
 	});
 
 }

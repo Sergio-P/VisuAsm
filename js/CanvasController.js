@@ -6,6 +6,7 @@ var CanvasController = function(cv){
 	this.cv.width = 550;
 	this.cv.height = 550;
 	this.initDraw();
+	this.instText = null;
 };
 
 CanvasController.prototype = {
@@ -21,6 +22,7 @@ CanvasController.prototype = {
 		this.stack = [];
 		this.drawText("R-Bank:",50,30);
 		this.drawText("Stack:",400,30);
+		this.updateInstText("");
 	},
 
 	stackPush: function(text){
@@ -55,6 +57,24 @@ CanvasController.prototype = {
 			fill: "#000"
 		});
 		this.cv.addChild(LText);
+	},
+
+	updateInstText: function(text){
+		if(this.instText==null){
+			this.instText = this.cv.display.text({
+				x: 200,
+				y: 520,
+				origin: { x: "center", y: "center" },
+				align: "center",
+				font: "18px monospace",
+				text: text,
+				fill: "#000"
+			});
+			this.cv.addChild(this.instText);
+		}
+		else{
+			this.instText.text = text;
+		}
 	}
 
 };

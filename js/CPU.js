@@ -111,6 +111,7 @@ CPU.prototype = {
 			inst = inst.replace(/'\(/g, "'");
 			inst = inst.replace(/\)'/g, "'");
 			console.log("this." + inst);
+			canvasController.updateInstText(inst);
 			eval("this." + inst);
 		}
 	},
